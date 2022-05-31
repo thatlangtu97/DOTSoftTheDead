@@ -128,7 +128,7 @@ public class GameInitializer : MonoBehaviour
         if (SpawnPlayerForAllDevices)
         {
             List<int> deviceIds = new List<int>();
-            foreach (var device in InputDevice.all.ToList())
+            foreach (var device in InputSystem.devices.ToList())
             {
                 deviceIds.Add(device.deviceId);
             }
@@ -140,7 +140,7 @@ public class GameInitializer : MonoBehaviour
 
         if (SpawnOnePlayerPerGamepad)
         {
-            foreach (var device in InputDevice.all.ToList())
+            foreach (var device in InputSystem.devices.ToList())
             {
                 if (PlayerSpawnPoints.Length > playersSpawned)
                 {
@@ -159,7 +159,7 @@ public class GameInitializer : MonoBehaviour
 
         if (SpawnPlayerForKeyboard)
         {
-            foreach (var device in InputDevice.all.ToList())
+            foreach (var device in InputSystem.devices.ToList())
             {
                 if (PlayerSpawnPoints.Length > playersSpawned)
                 {

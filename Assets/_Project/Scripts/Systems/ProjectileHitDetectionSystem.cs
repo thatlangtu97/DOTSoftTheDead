@@ -105,21 +105,24 @@ public class ProjectileHitDetectionSystem : JobComponentSystem
 
     protected unsafe override JobHandle OnUpdate(JobHandle inputDependencies)
     {
-        // TODO: launch multiple separate IJobs for projectile collision detection? like one per thread
+//        // TODO: launch multiple separate IJobs for projectile collision detection? like one per thread
+//
+//        HitDetectionJob hitDetectionJob = new HitDetectionJob();
+//        hitDetectionJob.PhysicsWorld = _physicsWorld.PhysicsWorld;
+//        hitDetectionJob.entityCommandBuffer = preTransformBarrier.CreateCommandBuffer();
+//        hitDetectionJob.RaycastHits = new NativeArray<RaycastHit>(64, Allocator.TempJob);
+//        hitDetectionJob.Projectiles = ProjectilesQuery.ToComponentDataArray<DamageProjectile>(Allocator.TempJob);
+//        hitDetectionJob.ProjectileEntities = ProjectilesQuery.ToEntityArray(Allocator.TempJob);
+//        hitDetectionJob.ProjectileTranslations = ProjectilesQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
+//        hitDetectionJob.HealthsFromEntity = GetComponentDataFromEntity<Health>();
+//        inputDependencies = hitDetectionJob.Schedule(inputDependencies);
+//        preTransformBarrier.AddJobHandleForProducer(inputDependencies);
+//
+//        inputDependencies.Complete(); 
+//
+//        return inputDependencies;
+//
 
-        HitDetectionJob hitDetectionJob = new HitDetectionJob();
-        hitDetectionJob.PhysicsWorld = _physicsWorld.PhysicsWorld;
-        hitDetectionJob.entityCommandBuffer = preTransformBarrier.CreateCommandBuffer();
-        hitDetectionJob.RaycastHits = new NativeArray<RaycastHit>(64, Allocator.TempJob);
-        hitDetectionJob.Projectiles = ProjectilesQuery.ToComponentDataArray<DamageProjectile>(Allocator.TempJob);
-        hitDetectionJob.ProjectileEntities = ProjectilesQuery.ToEntityArray(Allocator.TempJob);
-        hitDetectionJob.ProjectileTranslations = ProjectilesQuery.ToComponentDataArray<Translation>(Allocator.TempJob);
-        hitDetectionJob.HealthsFromEntity = GetComponentDataFromEntity<Health>();
-        inputDependencies = hitDetectionJob.Schedule(inputDependencies);
-        preTransformBarrier.AddJobHandleForProducer(inputDependencies);
-
-        inputDependencies.Complete(); 
-
-        return inputDependencies;
+        return default;
     }
 }

@@ -40,13 +40,14 @@ public class CharacterAnimationSystem : JobComponentSystem
     
     protected override JobHandle OnUpdate(JobHandle inputDependencies)
     {
-        var job = new CharacterAnimationSystemJob();
-        
-        job.deltaTime = UnityEngine.Time.deltaTime;
-        job.time = UnityEngine.Time.time;
-        job.PhysicsVelocityFromEntity = GetComponentDataFromEntity<PhysicsVelocity>(true);
-        job.CharacterFromEntity = GetComponentDataFromEntity<Character>(true);
-
-        return job.Schedule(this, inputDependencies);
+//        var job = new CharacterAnimationSystemJob();
+//        
+//        job.deltaTime = UnityEngine.Time.deltaTime;
+//        job.time = UnityEngine.Time.time;
+//        job.PhysicsVelocityFromEntity = GetComponentDataFromEntity<PhysicsVelocity>(true);
+//        job.CharacterFromEntity = GetComponentDataFromEntity<Character>(true);
+//
+//        return job.Schedule(this, inputDependencies);
+        return default;
     }
 }
