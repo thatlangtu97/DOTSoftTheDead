@@ -204,13 +204,21 @@ public class PlayerInputSystem : JobComponentSystem, InputActions.IGameplayActio
 
         InputActions = new InputActions();
         InputActions.Gameplay.SetCallbacks(this);
-
+        //ActionGamePlay.SetInput(InputActions);
+        
         MoveInputs = new NativeList<DeviceInputEvent<float2>>(Allocator.Persistent);
         LookInputs = new NativeList<DeviceInputEvent<float2>>(Allocator.Persistent);
         ShootInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
         MeleeInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
         ReturnInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
         ActionInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
+        
+//        MoveInputs = ActionGamePlay.MoveInputs;
+//        LookInputs = ActionGamePlay.LookInputs;
+//        ShootInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
+//        MeleeInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
+//        ReturnInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
+//        ActionInputs = new NativeList<DeviceInputEvent<float>>(Allocator.Persistent);
 
         PlayersQuery = EntityManager.CreateEntityQuery(typeof(PlayerTag));
     }

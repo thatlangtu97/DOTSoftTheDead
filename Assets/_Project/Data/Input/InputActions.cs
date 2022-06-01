@@ -418,8 +418,10 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Action.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
                 @Action.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
                 @Action.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnAction;
+                ActionGamePlay.m_GameplayActionsCallbackInterface = m_Wrapper.m_GameplayActionsCallbackInterface;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
+            
             if (instance != null)
             {
                 @Move.started += instance.OnMove;
@@ -440,6 +442,9 @@ public partial class @InputActions : IInputActionCollection2, IDisposable
                 @Action.started += instance.OnAction;
                 @Action.performed += instance.OnAction;
                 @Action.canceled += instance.OnAction;
+                
+                ActionGamePlay.m_GameplayActionsCallbackInterface = instance;
+
             }
         }
     }

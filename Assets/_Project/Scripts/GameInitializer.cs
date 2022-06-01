@@ -62,31 +62,41 @@ public class GameInitializer : MonoBehaviour
     private EntityManager entityManager;
     private ZombieSpawningSystem zombieSpawnSystem;
     private EntityQuery playersQuery;
-
+    public float timeDelaySpawn = 1f;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+//        if (Input.GetKeyDown(KeyCode.Alpha2))
+//        {
+//            NativeArray<Entity> playerEntities = playersQuery.ToEntityArray(Allocator.TempJob);
+//            for (int i = 0; i < playerEntities.Length; i++)
+//            {
+//                string linkedEntities = "";
+//                DynamicBuffer<LinkedEntityGroup> linkedEntitiesBuffer = World.Active.EntityManager.GetBuffer<LinkedEntityGroup>(playerEntities[i]);
+//
+//                foreach (var item in linkedEntitiesBuffer)
+//                {
+//                    linkedEntities += item.Value.Index.ToString() + ",";
+//                }
+//
+//                Debug.Log("Player " + playerEntities[i].Index + " has links : " + linkedEntities);
+//            }
+//            playerEntities.Dispose();
+//        }
+        if (zombieSpawnSystem.CurrentZombieCount >= 300) return;
+        timeDelaySpawn -= Time.deltaTime;
+        
+        
+        if (timeDelaySpawn <= 0)
         {
             zombieSpawnSystem.SpawnZombieBatch(BatchSpawnCount);
             UpdateZombieCount();
+            timeDelaySpawn = 1f;
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            NativeArray<Entity> playerEntities = playersQuery.ToEntityArray(Allocator.TempJob);
-            for (int i = 0; i < playerEntities.Length; i++)
-            {
-                string linkedEntities = "";
-                DynamicBuffer<LinkedEntityGroup> linkedEntitiesBuffer = World.Active.EntityManager.GetBuffer<LinkedEntityGroup>(playerEntities[i]);
+//        if (Input.GetKeyDown(KeyCode.Alpha1))
+//        {
+//
+//        }
 
-                foreach (var item in linkedEntitiesBuffer)
-                {
-                    linkedEntities += item.Value.Index.ToString() + ",";
-                }
-
-                Debug.Log("Player " + playerEntities[i].Index + " has links : " + linkedEntities);
-            }
-            playerEntities.Dispose();
-        }
 
         UpdateZombieCount();
     }
@@ -95,7 +105,6 @@ public class GameInitializer : MonoBehaviour
     {
         ZombieCountText.text = zombieSpawnSystem.CurrentZombieCount.ToString();
     }
-
     void Start()
     {
         entityManager = World.Active.EntityManager;
@@ -125,18 +134,19 @@ public class GameInitializer : MonoBehaviour
 
         int playersSpawned = 0;
 
-        if (SpawnPlayerForAllDevices)
-        {
-            List<int> deviceIds = new List<int>();
-            foreach (var device in InputSystem.devices.ToList())
-            {
-                deviceIds.Add(device.deviceId);
-            }
-            Entity newPlayeEntity = World.Active.GetOrCreateSystem<PlayerInputSystem>().CreatePlayer(deviceIds);
-            SpawnCharacterForPlayer(entityManager, characterPrefabEntity, startingGunPrefabEntity, playerStartingMeleePrefabEntity, PlayerSpawnPoints[playersSpawned].position, Quaternion.identity, newPlayeEntity);
-
-            playersSpawned++;
-        }
+//        if (SpawnPlayerForAllDevices)
+//        {
+//            List<int> deviceIds = new List<int>();
+//            foreach (var device in InputSystem.devices.ToList())
+//            {
+//                deviceIds.Add(device.deviceId);
+//            }
+//            Entity newPlayeEntity = World.Active.GetOrCreateSystem<PlayerInputSystem>().CreatePlayer(deviceIds);
+//            SpawnCharacterForPlayer(entityManager, characterPrefabEntity, startingGunPrefabEntity, playerStartingMeleePrefabEntity, PlayerSpawnPoints[playersSpawned].position, Quaternion.identity, newPlayeEntity);
+//
+//            playersSpawned++;
+//            
+//        }
 
         if (SpawnOnePlayerPerGamepad)
         {
@@ -157,22 +167,22 @@ public class GameInitializer : MonoBehaviour
             }
         }
 
-        if (SpawnPlayerForKeyboard)
-        {
-            foreach (var device in InputSystem.devices.ToList())
-            {
-                if (PlayerSpawnPoints.Length > playersSpawned)
-                {
-                    if (device.displayName == KeyboardName)
-                    {
-                        Entity newPlayerEntity = World.Active.GetOrCreateSystem<PlayerInputSystem>().CreatePlayer(new List<int>() { device.deviceId });
-                        SpawnCharacterForPlayer(entityManager, characterPrefabEntity, startingGunPrefabEntity, playerStartingMeleePrefabEntity, PlayerSpawnPoints[playersSpawned].position, Quaternion.identity, newPlayerEntity);
-
-                        playersSpawned++;
-                    }
-                }
-            }
-        }
+//        if (SpawnPlayerForKeyboard)
+//        {
+//            foreach (var device in InputSystem.devices.ToList())
+//            {
+//                if (PlayerSpawnPoints.Length > playersSpawned)
+//                {
+//                    if (device.displayName == KeyboardName)
+//                    {
+//                        Entity newPlayerEntity = World.Active.GetOrCreateSystem<PlayerInputSystem>().CreatePlayer(new List<int>() { device.deviceId });
+//                        SpawnCharacterForPlayer(entityManager, characterPrefabEntity, startingGunPrefabEntity, playerStartingMeleePrefabEntity, PlayerSpawnPoints[playersSpawned].position, Quaternion.identity, newPlayerEntity);
+//
+//                        playersSpawned++;
+//                    }
+//                }
+//            }
+//        }
 
         Bounds bounds = PickUpsBounds.bounds;
         for(int i = 0; i < HealthPickUpsNumber; i++)
