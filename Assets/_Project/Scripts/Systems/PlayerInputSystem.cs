@@ -263,7 +263,7 @@ public class PlayerInputSystem : JobComponentSystem, InputActions.IGameplayActio
     {
         GameplayInputsJob job = new GameplayInputsJob();
         job.MoveInputs = MoveInputs;
-        job.LookInputs = LookInputs;
+        job.LookInputs = MoveInputs;
         job.ShootInputs = ShootInputs;
         job.MeleeInputs = MeleeInputs;
         job.ReturnInputs = ReturnInputs;
